@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var cloneGraph = function (node) {
+            // Посещенные нами узлы
+            const visited = {};
+
+            // Функция копирования графа
+            const dfs = (node) => {
+                if (!node) return node;
+                // Узел возращается, если мы его уже посещали
+                if (visited[node.val] != null) return visited[node.val];
+
+                // Создается база для нового скопированного узла и добавляет его в группу скопированных ранее узлов
+                const root = new Node(node.val);
+                visited[node.val] = root;
+
+                // Добавляются скопированные соседи к данному узлу
+                node.neighbors.forEach(n => root.neighbors.push(dfs(n)))
+                return root;
+            }
+
+            // Возращается новый скуопированный граф
+            return dfs(node);
+        };
+
+    </script>
+</body>
+
+</html>

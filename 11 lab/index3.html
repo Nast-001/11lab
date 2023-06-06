@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var canFinish = function (numCourses, prerequisites) {
+            var edges = Array(numCourses).fill(0).map(_ => Array(numCourses).fill(0));
+            var incoming = Array(numCourses).fill(0); 
+            //Длинна равная количеству Courses
+            var len = prerequisites.length; 
+            var post = 0;
+            var prev = 0;
+            var queue = [];
+            var num = 0;
+            var count = 0;
+
+            for (var i = 0; i < len; i++) {
+                prev = prerequisites[i][1]; 
+                post = prerequisites[i][0]; 
+                if (edges[prev][post] === 0) {
+                    //Увеличиваем количество проходимых нами курсов
+                    incoming[post]++; 
+                    edges[prev][post] = 1;
+                }
+            }
+
+            for (var j = 0; j < numCourses; j++) {
+                if (incoming[j] === 0) queue.push(j);
+            }
+
+            while (queue.length) {
+                count++;
+                num = queue.pop()
+                for (var k = 0; k < numCourses; k++) {
+                    //Прверка курса
+                    if (edges[num][k] === 1 && --incoming[k] === 0) queue.push(k);
+                }
+            }
+
+            return count === numCourses;
+        };
+
+    </script>
+</body>
+
+</html>
